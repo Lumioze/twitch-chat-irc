@@ -7,7 +7,7 @@ A simple tool used to send and receive Twitch chat messages over IRC with python
 ## Setup
 ### Requirements:
 * This tool was created in a Python 3 environment.
-* Run `pip install -r requirements.txt` to ensure you have the necessary dependencies.
+* Run `pip install .` to ensure you have the necessary dependencies.
 
 ### Authentication
 If you intend to send messages, you will require authentication.
@@ -17,7 +17,7 @@ If you intend to send messages, you will require authentication.
 4. Copy the generated oath token. Now, there are 2 ways to proceed:
 	- (Recommended) Create a file called `.env` and save your credentials here as:
       > NICK=x <br> PASS=y
-	  
+
 	  replacing `x` and `y` with your username and oauth token respectively.<br> See `example.env` for an example.
 
 	- Pass your credentials as function/command line arguments. See below for examples.
@@ -66,12 +66,12 @@ optional arguments:
 #### Receiving messages
 ##### 1. Output messages from a livestream to standard output
 ```
-python twitch_chat_irc.py <channel_name>
+python -m twitch_chat_irc <channel_name>
 ```
 
 ##### 2. Output messages from a livestream to a file
 ```
-python twitch_chat_irc.py <channel_name> -output <file_name>
+python -m twitch_chat_irc <channel_name> -output <file_name>
 ```
 
 If the file name ends in `.json`, the array will be written to the file in JSON format. Similarly, if the file name ends in `.csv`, the data will be written in CSV format. <br> Otherwise, the chat messages will be outputted to the file in the following format:<br>
@@ -79,31 +79,31 @@ If the file name ends in `.json`, the array will be written to the file in JSON 
 
 ##### 3. Set a timeout (close connection if no message has been sent in a certain time)
 ```
-python twitch_chat_irc.py <channel_name> -timeout <time_in_seconds> -output <file_name>
+python -m twitch_chat_irc <channel_name> -timeout <time_in_seconds> -output <file_name>
 ```
 
 There are other options, such as `message_timeout` and `buffer_size`, but these normally do not need to be changed. See above for a description of all options.
 
 ##### 4. Set a maximum number of messages to read (close connection once limit has been reached)
 ```
-python twitch_chat_irc.py <channel_name> -message_limit <number_of_messages> -output <file_name>
+python -m twitch_chat_irc <channel_name> -message_limit <number_of_messages> -output <file_name>
 ```
 
 
 #### Example outputs
 [JSON Example](examples/example.json):
 ```
-python twitch_chat_irc.py <channel_name> -output example.json
+python -m twitch_chat_irc <channel_name> -output example.json
 ```
 
 [CSV Example](examples/example.csv):
 ```
-python twitch_chat_irc.py <channel_name> -output example.csv
+python -m twitch_chat_irc <channel_name> -output example.csv
 ```
 
 [Text Example](examples/example.txt):
 ```
-python twitch_chat_irc.py <channel_name> -output example.txt
+python -m twitch_chat_irc <channel_name> -output example.txt
 ```
 
 
@@ -111,12 +111,12 @@ python twitch_chat_irc.py <channel_name> -output example.txt
 This will open an interactive session which allows you to send messages to the specified channel.
 ##### 1. Send messages to a channel (authentication via .env)
 ```
-python twitch_chat_irc.py --send <channel_name>
+python -m twitch_chat_irc --send <channel_name>
 ```
 
 ##### 2. Send messages to a channel (authentication via arguments)
 ```
-python twitch_chat_irc.py --send <channel_name> -username <username> -oauth <oauth_token>
+python -m twitch_chat_irc --send <channel_name> -username <username> -oauth <oauth_token>
 ```
 
 ## Python module
@@ -124,7 +124,7 @@ python twitch_chat_irc.py --send <channel_name> -username <username> -oauth <oau
 ### Importing the module
 
 ```python
-import twitch_chat_irc
+from twitch_chat_irc import twitch_chat_irc
 ```
 
 ### Examples
@@ -185,5 +185,5 @@ The `close_connection` method closes the connection with Twitch chat. No futher 
 
 ##### 1. Close a connection
 ```python
-connection.close()
+connection.close_connection()
 ```
