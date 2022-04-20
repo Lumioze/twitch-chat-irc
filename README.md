@@ -7,7 +7,8 @@ A simple tool used to send and receive Twitch chat messages over IRC with python
 ## Setup
 ### Requirements:
 * This tool was created in a Python 3 environment.
-* Run `pip install .` to ensure you have the necessary dependencies.
+* Install via pip with `pip install twitch-chat-irc`
+* Or install manually with `pip install .`
 
 ### Authentication
 If you intend to send messages, you will require authentication.
