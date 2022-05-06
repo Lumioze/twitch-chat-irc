@@ -9,7 +9,7 @@ readme = (_parent / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='twitch-chat-irc',
-    version='0.0.3',
+    version='0.0.4',
     description=('A simple tool used to send and receive Twitch chat '
                  'messages over IRC with python web sockets.'),
     author='xenova, scmanjarrez',

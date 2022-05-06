@@ -154,9 +154,11 @@ class TwitchChatIRC:
                             break
 
         except KeyboardInterrupt:
-            print("Interrupted by user.")
+            if not self.suppress_print:
+                print("Interrupted by user.")
         except Exception as e:
-            print("Unknown Error:", e)
+            if not self.suppress_print:
+                print("Unknown Error:", e)
             raise e
 
         return messages
