@@ -9,7 +9,7 @@ readme = (_parent / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='twitch-chat-irc',
-    version='0.0.1',
+    version='0.0.3',
     description=('A simple tool used to send and receive Twitch chat '
                  'messages over IRC with python web sockets.'),
     author='xenova, scmanjarrez',
@@ -30,7 +30,7 @@ setup(
         'Programming Language :: Python :: 3.8'
     ],
     packages=['twitch_chat_irc'],
-    python_requires='>= 3.6',
+    python_requires='>= 3.7',
     install_requires=[
         'python-decouple',
         'emoji'

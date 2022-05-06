@@ -28,7 +28,7 @@ class TwitchChatIRC:
 
     __CURRENT_CHANNEL = None
 
-    def __init__(self, username=None, password=None):
+    def __init__(self, username=None, password=None, suppress_print=False):
         # try get from environment variables (.env)
         self.__NICK = config('NICK', self.__DEFAULT_NICK)
         self.__PASS = config('PASS', self.__DEFAULT_PASS)
@@ -39,12 +39,15 @@ class TwitchChatIRC:
         if(password is not None):
             self.__PASS = f'oauth:{str(password).lstrip("oauth:")}'
 
+        self.suppress_print = suppress_print
+
         # create new socket
         self.__SOCKET = socket.socket()
 
         # start connection
         self.__SOCKET.connect((self.__HOST, self.__PORT))
-        print(f"Connected to {self.__HOST} on port {self.__PORT}")
+        if not self.suppress_print:
+            print(f"Connected to {self.__HOST} on port {self.__PORT}")
 
         # log in
         self.__send_raw('CAP REQ :twitch.tv/tags')
@@ -81,7 +84,8 @@ class TwitchChatIRC:
 
     def close_connection(self):
         self.__SOCKET.close()
-        print("Connection closed")
+        if not self.suppress_print:
+            print("Connection closed")
 
     def listen(self, channel_name, messages=[], timeout=None,
                message_timeout=1.0, on_message=None,
@@ -92,7 +96,8 @@ class TwitchChatIRC:
         if(on_message is None):
             on_message = self.__print_message
 
-        print("Begin retrieving messages:")
+        if not self.suppress_print:
+            print("Begin retrieving messages:")
 
         time_since_last_message = 0
         readbuffer = ''
@@ -143,8 +148,9 @@ class TwitchChatIRC:
                         time_since_last_message += message_timeout
 
                         if(time_since_last_message >= timeout):
-                            print(f"No data received in {timeout} seconds. "
-                                  "Timing out.")
+                            if not self.suppress_print:
+                                print(f"No data received in {timeout} "
+                                      f"seconds. Timing out.")
                             break
 
         except KeyboardInterrupt:
@@ -163,4 +169,5 @@ class TwitchChatIRC:
             raise DefaultUser
         else:
             self.__send_raw(f'PRIVMSG #{channel_name.lower()} :{message}')
-            print(f"Sent '{message}' to {channel_name}")
+            if not self.suppress_print:
+                print(f"Sent '{message}' to {channel_name}")
