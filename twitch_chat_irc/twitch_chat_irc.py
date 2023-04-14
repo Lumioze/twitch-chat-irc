@@ -132,12 +132,7 @@ class TwitchChatIRC:
                             messages.append(data)
 
                             if(callable(on_message)):
-                                try:
-                                    on_message(data)
-                                except TypeError:
-                                    raise Exception(
-                                        f"Incorrect number of parameters for "
-                                        f"function {on_message.__name__}")
+                               on_message(data)
 
                             if(message_limit is not None and
                                len(messages) >= message_limit):
